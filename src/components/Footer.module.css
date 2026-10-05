@@ -1,0 +1,90 @@
+.footer {
+  background-color: var(--color-creme);
+  border-top: 1px solid var(--color-divider);
+  padding-top: 48px;
+  padding-bottom: 36px;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.logo {
+  height: 54px;
+  width: auto;
+}
+
+.verticalDivider {
+  width: 1px;
+  height: 48px;
+  background-color: var(--color-divider);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.instagramLink {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-blue);
+  border-bottom: 1px solid var(--color-blue);
+  display: inline-block;
+  transition: opacity var(--transition-fast);
+}
+
+.instagramLink:hover {
+  opacity: 0.8;
+}
+
+.location {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.bottomRow {
+  padding-top: 24px;
+  border-top: 1px solid var(--color-divider-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.copyright {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.brandSignature {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-vinho);
+}
+
+@media (max-width: 640px) {
+  .topRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .verticalDivider {
+    width: 60px;
+    height: 1px;
+  }
+
+  .bottomRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
