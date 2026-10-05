@@ -1,68 +1,85 @@
 .visitSection {
   background-color: var(--color-creme);
-  border-top: 1px solid var(--color-divider-light);
+  border-top: 2px solid var(--color-vinho);
+  padding-top: clamp(48px, 6vw, 80px);
+  padding-bottom: clamp(48px, 6vw, 80px);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 6vw, 96px);
-  align-items: center;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: clamp(32px, 4vw, 56px);
+  align-items: flex-start;
 }
 
-.imageWrapper {
-  position: relative;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  box-shadow: 0 16px 40px rgba(48, 39, 37, 0.08);
-}
-
-.image {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  transition: transform var(--transition-slow);
-}
-
-.imageWrapper:hover .image {
-  transform: scale(1.02);
-}
-
-.infoContent {
+/* Column 1: Heading & Address */
+.locationCol {
   display: flex;
   flex-direction: column;
-}
-
-.eyebrow {
-  margin-bottom: 12px;
+  align-items: flex-start;
 }
 
 .title {
   font-family: var(--font-serif);
-  font-size: clamp(2.25rem, 5vw, 4rem);
-  font-weight: 500;
-  line-height: 1.1;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.08;
   color: var(--color-vinho);
   margin-bottom: 16px;
 }
 
+.blueLine {
+  width: 48px;
+  height: 2.5px;
+  background-color: var(--color-blue);
+  margin-bottom: 24px;
+}
+
 .address {
-  font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
-  font-weight: 400;
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: 500;
   color: var(--color-text);
-  margin-bottom: 32px;
+  line-height: 1.4;
+}
+
+.city {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+/* Column 2: Hours Table */
+.hoursCol {
+  display: flex;
+  flex-direction: column;
+  padding-left: clamp(0px, 2vw, 24px);
+  border-left: 1px solid var(--color-divider);
+  border-right: 1px solid var(--color-divider);
+  padding-right: clamp(0px, 2vw, 24px);
+}
+
+.hoursEyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.785rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-blue);
+  margin-bottom: 16px;
 }
 
 .scheduleTable {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 40px;
 }
 
 .scheduleRow {
-  border-bottom: 1px solid var(--color-divider);
+  border-bottom: 1px solid var(--color-divider-light);
+}
+
+.scheduleRow:last-child {
+  border-bottom: none;
 }
 
 .scheduleDay {
@@ -70,7 +87,7 @@
   font-size: 0.9375rem;
   font-weight: 400;
   color: var(--color-text);
-  padding: 14px 0;
+  padding: 10px 0;
   text-align: left;
 }
 
@@ -79,31 +96,55 @@
   font-size: 0.9375rem;
   font-weight: 500;
   color: var(--color-text);
-  padding: 14px 0;
+  padding: 10px 0;
   text-align: right;
 }
 
-.actions {
+/* Column 3: Buttons & Profile */
+.actionsCol {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
+  gap: 16px;
+  align-items: stretch;
 }
 
 .mapsBtn {
-  font-size: 0.9375rem;
-  padding: 14px 28px;
+  width: 100%;
 }
 
-@media (max-width: 900px) {
+.instaBtn {
+  width: 100%;
+}
+
+.profileLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-blue);
+  margin-top: 8px;
+  transition: opacity var(--transition-fast);
+}
+
+.profileLink:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 960px) {
   .grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
   }
 
-  .imageWrapper {
-    max-width: 540px;
-    margin: 0 auto;
-    width: 100%;
+  .hoursCol {
+    padding: 0;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid var(--color-divider);
+    border-bottom: 1px solid var(--color-divider);
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
 }

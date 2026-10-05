@@ -9,53 +9,54 @@ export const Flavors: React.FC = () => {
   return (
     <section id={flavors.id} className={`section-padding ${styles.flavors}`} aria-labelledby="flavors-heading">
       <div className="container">
-        {/* Header */}
+        {/* Centered Header */}
         <div className={styles.header}>
-          <div className={`eyebrow ${styles.eyebrow}`}>{flavors.eyebrow}</div>
+          <div className={styles.eyebrow}>{flavors.eyebrow}</div>
           <h2 id="flavors-heading" className={styles.title}>
             {flavors.h2}
           </h2>
         </div>
 
-        {/* Content Grid */}
+        {/* 2-Column Grid */}
         <div className={styles.grid}>
-          {/* Vitrine Image Column */}
+          {/* Vitrine Image */}
           <div className={styles.vitrineWrapper}>
-            <picture>
-              <source media="(min-width: 768px)" srcSet={flavors.vitrineImage.desktop} />
-              <img
-                src={flavors.vitrineImage.mobile}
-                alt={flavors.vitrineImage.alt}
-                className={styles.vitrineImage}
-                loading="lazy"
-              />
-            </picture>
+            <img
+              src={flavors.vitrineImage.src}
+              alt={flavors.vitrineImage.alt}
+              className={styles.vitrineImage}
+              loading="lazy"
+            />
           </div>
 
-          {/* List Column */}
-          <div className={styles.listWrapper}>
-            <ul className={styles.itemsList}>
-              {flavors.items.map((item) => (
-                <li key={item.number} className={styles.item}>
-                  <span className={styles.number}>{item.number}</span>
-                  <div className={styles.itemContent}>
-                    <h3 className={styles.itemTitle}>{item.title}</h3>
-                    <p className={styles.itemDescription}>{item.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+          {/* Double Vinho Menu Frame */}
+          <div>
+            <div className={styles.menuCard}>
+              <div className={styles.menuInnerFrame}>
+                {flavors.categories.map((cat, idx) => (
+                  <React.Fragment key={cat}>
+                    <div className={styles.menuItem}>{cat}</div>
+                    {idx < flavors.categories.length - 1 && (
+                      <div className={styles.diamondDivider} aria-hidden="true">
+                        ❖
+                      </div>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
 
-            <div className={styles.footerActions}>
+            {/* Actions below menu frame */}
+            <div className={styles.actions}>
               <p className={styles.note}>{flavors.note}</p>
               <a
                 href={brand.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`btn btn-outline-dark ${styles.exploreBtn}`}
+                className={`btn btn-primary ${styles.exploreBtn}`}
               >
                 <span>{flavors.cta}</span>
-                <ArrowRight size={16} />
+                <ArrowRight size={18} />
               </a>
             </div>
           </div>

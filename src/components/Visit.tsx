@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, Instagram } from 'lucide-react';
 import { SITE_CONTENT } from '../data/content';
 import styles from './Visit.module.css';
 
@@ -7,28 +7,22 @@ export const Visit: React.FC = () => {
   const { visit, brand } = SITE_CONTENT;
 
   return (
-    <section id={visit.id} className={`section-padding ${styles.visitSection}`} aria-labelledby="visit-heading">
+    <section id={visit.id} className={styles.visitSection} aria-labelledby="visit-heading">
       <div className="container">
         <div className={styles.grid}>
-          {/* Entrance Door Image Column */}
-          <div className={styles.imageWrapper}>
-            <img
-              src={visit.image.src}
-              alt={visit.image.alt}
-              className={styles.image}
-              loading="lazy"
-            />
-          </div>
-
-          {/* Location & Schedule Info Column */}
-          <div className={styles.infoContent}>
-            <div className={`eyebrow ${styles.eyebrow}`}>{visit.eyebrow}</div>
+          {/* Col 1: Heading & Address */}
+          <div className={styles.locationCol}>
             <h2 id="visit-heading" className={styles.title}>
               {visit.h2}
             </h2>
-            <p className={styles.address}>{brand.address}</p>
+            <div className={styles.blueLine} aria-hidden="true" />
+            <p className={styles.address}>{visit.address}</p>
+            <p className={styles.city}>{visit.city}</p>
+          </div>
 
-            {/* Schedule Table */}
+          {/* Col 2: Hours Table */}
+          <div className={styles.hoursCol}>
+            <div className={styles.hoursEyebrow}>HORÁRIOS</div>
             <table className={styles.scheduleTable} aria-label="Horário de Funcionamento">
               <tbody>
                 {visit.hours.map((row) => (
@@ -39,29 +33,39 @@ export const Visit: React.FC = () => {
                 ))}
               </tbody>
             </table>
+          </div>
 
-            {/* Actions */}
-            <div className={styles.actions}>
-              <a
-                href={brand.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`btn btn-primary ${styles.mapsBtn}`}
-              >
-                <span>{visit.primaryCta}</span>
-                <ArrowRight size={18} />
-              </a>
+          {/* Col 3: Actions */}
+          <div className={styles.actionsCol}>
+            <a
+              href={brand.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`btn btn-primary ${styles.mapsBtn}`}
+            >
+              <span>{visit.primaryCta}</span>
+              <ArrowRight size={18} />
+            </a>
 
-              <a
-                href={brand.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-blue"
-              >
-                <span>{visit.secondaryCta}</span>
-                <ExternalLink size={14} />
-              </a>
-            </div>
+            <a
+              href={brand.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`btn btn-outline-dark ${styles.instaBtn}`}
+            >
+              <span>{visit.secondaryCta}</span>
+              <ArrowRight size={18} />
+            </a>
+
+            <a
+              href={brand.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.profileLink}
+            >
+              <Instagram size={18} />
+              <span>{brand.instagramHandle}</span>
+            </a>
           </div>
         </div>
       </div>

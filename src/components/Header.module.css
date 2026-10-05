@@ -4,11 +4,9 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: rgba(247, 241, 231, 0.95);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--color-divider-light);
-  transition: background-color var(--transition-base), shadow var(--transition-base);
+  background-color: var(--color-creme);
+  border-bottom: 1px solid var(--color-divider);
+  transition: background-color var(--transition-base);
 }
 
 .inner {
@@ -29,9 +27,16 @@
 }
 
 .logo {
-  height: 48px;
-  width: auto;
+  width: 128px;
+  height: auto;
+  max-height: 72px;
   object-fit: contain;
+}
+
+.navGroup {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 3.5vw, 48px);
 }
 
 .navDesktop {
@@ -43,30 +48,15 @@
 .navLink {
   font-family: var(--font-sans);
   font-size: 0.9375rem;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--color-text);
   position: relative;
   padding: 4px 0;
   transition: color var(--transition-fast);
 }
 
-.navLink::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 1.5px;
-  background-color: var(--color-vinho);
-  transition: width var(--transition-fast);
-}
-
 .navLink:hover {
   color: var(--color-vinho);
-}
-
-.navLink:hover::after {
-  width: 100%;
 }
 
 .ctaDesktop {
@@ -111,7 +101,7 @@
   right: 0;
   bottom: 0;
   width: 85%;
-  max-width: 340px;
+  max-width: 320px;
   background-color: var(--color-creme-light);
   padding: 24px 24px 40px;
   display: flex;
@@ -130,8 +120,8 @@
 }
 
 .drawerLogo {
-  height: 40px;
-  width: auto;
+  width: 96px;
+  height: auto;
 }
 
 .closeButton {
@@ -148,17 +138,17 @@
 .drawerNav {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   margin-bottom: auto;
 }
 
 .drawerNavLink {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-size: 1.375rem;
+  font-weight: 600;
   color: var(--color-vinho);
   padding: 8px 0;
-  border-bottom: 1px dashed var(--color-divider-light);
+  border-bottom: 1px dashed var(--color-divider);
 }
 
 .drawerCta {
@@ -171,6 +161,10 @@
 @media (max-width: 900px) {
   .inner {
     height: var(--header-height-mobile);
+  }
+
+  .logo {
+    width: 92px;
   }
 
   .navDesktop,

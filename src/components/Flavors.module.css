@@ -1,41 +1,42 @@
 .flavors {
   background-color: var(--color-creme);
-  border-top: 1px solid var(--color-divider-light);
 }
 
 .header {
-  margin-bottom: clamp(36px, 5vw, 64px);
+  text-align: center;
+  margin-bottom: clamp(32px, 5vw, 56px);
 }
 
 .eyebrow {
   margin-bottom: 12px;
+  justify-content: center;
 }
 
 .title {
   font-family: var(--font-serif);
-  font-size: clamp(2.25rem, 5vw, 4rem);
-  font-weight: 500;
-  line-height: 1.1;
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 600;
   color: var(--color-vinho);
+  line-height: 1.1;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: clamp(32px, 5vw, 72px);
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 64px);
   align-items: center;
 }
 
 .vitrineWrapper {
   border-radius: var(--radius-sm);
   overflow: hidden;
-  box-shadow: 0 16px 40px rgba(48, 39, 37, 0.08);
+  box-shadow: 0 12px 32px rgba(48, 39, 37, 0.08);
 }
 
 .vitrineImage {
   width: 100%;
   height: auto;
-  display: block;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   transition: transform var(--transition-slow);
 }
@@ -44,88 +45,74 @@
   transform: scale(1.02);
 }
 
-.listWrapper {
+/* Double Vinho Menu Frame */
+.menuCard {
+  border: 1px solid var(--color-vinho);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+}
+
+.menuInnerFrame {
+  border: 1px solid var(--color-vinho);
+  padding: clamp(28px, 4vw, 44px) 24px;
+  text-align: center;
   display: flex;
   flex-direction: column;
+  gap: 16px;
 }
 
-.itemsList {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-}
-
-.item {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--color-divider);
-}
-
-.item:first-child {
-  padding-top: 0;
-}
-
-.number {
+.menuItem {
   font-family: var(--font-serif);
-  font-size: 1.75rem;
-  font-weight: 400;
-  color: var(--color-blue);
-  line-height: 1;
-  min-width: 36px;
-}
-
-.itemContent {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.itemTitle {
-  font-family: var(--font-serif);
-  font-size: 1.625rem;
-  font-weight: 500;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 600;
   color: var(--color-vinho);
   line-height: 1.2;
 }
 
-.itemDescription {
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  color: var(--color-text-muted);
-  line-height: 1.5;
+.diamondDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--color-blue);
+  font-size: 0.875rem;
 }
 
-.footerActions {
-  margin-top: 36px;
+.diamondDivider::before,
+.diamondDivider::after {
+  content: '';
+  height: 1px;
+  width: 48px;
+  background-color: var(--color-divider);
+}
+
+.actions {
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: 16px;
+  text-align: right;
 }
 
 .note {
   font-family: var(--font-sans);
   font-size: 0.9375rem;
-  color: var(--color-text);
-  font-weight: 500;
+  color: var(--color-text-muted);
 }
 
 .exploreBtn {
-  font-size: 0.8125rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 12px 24px;
+  font-size: 0.9375rem;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
 
-  .vitrineWrapper {
-    max-width: 600px;
+  .actions {
+    align-items: center;
+    text-align: center;
   }
 }

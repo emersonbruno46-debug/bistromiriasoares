@@ -7,14 +7,6 @@ export const Gallery: React.FC = () => {
   const { space } = SITE_CONTENT;
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const handleOpenLightbox = (index: number) => {
-    setLightboxIndex(index);
-  };
-
-  const handleCloseLightbox = () => {
-    setLightboxIndex(null);
-  };
-
   return (
     <section id={space.id} className={`section-padding ${styles.gallerySection}`} aria-labelledby="space-heading">
       <div className="container">
@@ -23,17 +15,16 @@ export const Gallery: React.FC = () => {
           <h2 id="space-heading" className={styles.title}>
             {space.h2}
           </h2>
-          <p className={styles.subtitle}>{space.text}</p>
         </div>
 
-        {/* Asymmetric Gallery Grid */}
+        {/* 2-Photo Compact Grid V2 */}
         <div className={styles.grid}>
           {space.gallery.map((item, idx) => (
             <button
               key={item.id}
               type="button"
               className={styles.itemCard}
-              onClick={() => handleOpenLightbox(idx)}
+              onClick={() => setLightboxIndex(idx)}
               aria-label={`Ampliar imagem: ${item.caption}`}
             >
               <div className={styles.imageFrame}>
@@ -45,7 +36,6 @@ export const Gallery: React.FC = () => {
                 />
               </div>
               <div className={styles.cardFooter}>
-                <div className={styles.accentLine} aria-hidden="true" />
                 <span className={styles.caption}>{item.caption}</span>
               </div>
             </button>
@@ -58,7 +48,7 @@ export const Gallery: React.FC = () => {
         <Lightbox
           items={space.gallery}
           currentIndex={lightboxIndex}
-          onClose={handleCloseLightbox}
+          onClose={() => setLightboxIndex(null)}
           onNavigate={(newIdx) => setLightboxIndex(newIdx)}
         />
       )}
