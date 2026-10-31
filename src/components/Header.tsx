@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { SITE_CONTENT } from '../data/content';
@@ -13,14 +13,29 @@ export const Header: React.FC = () => {
   const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
 
+  const openRef = useRef(open);
+  openRef.current = open;
+
   useEffect(() => {
-    let last = 0;
+    // Direção com histerese: só troca de estado após ~16px na mesma direção (evita piscar)
+    let anchor = 0;
+    let dir = 0;
     return scrollY.on('change', (y) => {
-      setScrolled(y > 60);
-      setHidden(y > 480 && y > last + 2 && !open);
-      if (Math.abs(y - last) > 2) last = y;
+      setScrolled((v) => (v ? y > 20 : y > 60));
+      const delta = y - anchor;
+      const d = delta > 0 ? 1 : delta < 0 ? -1 : 0;
+      if (d !== 0 && d !== dir) {
+        dir = d;
+        anchor = y;
+        return;
+      }
+      if (Math.abs(delta) > 16) {
+        setHidden(dir > 0 && y > 480 && !openRef.current);
+        anchor = y;
+      }
+      if (y <= 480) setHidden(false);
     });
-  }, [scrollY, open]);
+  }, [scrollY]);
 
   useEffect(() => {
     if (!open) return;

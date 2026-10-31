@@ -4,14 +4,13 @@
   z-index: 100;
   height: var(--header-h);
   color: var(--color-creme);
-  transition: background-color 0.5s var(--ease), color 0.5s var(--ease), transform 0.6s var(--ease), height 0.5s var(--ease);
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease), transform 0.5s var(--ease);
+  will-change: transform;
 }
 
 .scrolled {
   background: var(--color-creme);
   color: var(--color-vinho);
-  --header-h: 72px;
-  height: 72px;
 }
 
 .hidden { transform: translateY(-100%); }
@@ -24,8 +23,8 @@
   gap: 24px;
 }
 
-.logo { width: 78px; transition: width 0.5s var(--ease); }
-.scrolled .logo { width: 64px; }
+.logo { width: 78px; transform-origin: left center; transition: transform 0.5s var(--ease); }
+.scrolled .logo { transform: scale(0.85); }
 
 .navGroup { display: flex; align-items: center; gap: 36px; }
 
@@ -97,7 +96,6 @@
   .cta.btn { display: inline-flex; }
   .menuButton { display: none; }
   .logo { width: 88px; }
-  .scrolled .logo { width: 66px; }
   .scrolled .cta { --btn-hover: var(--color-blue); background: var(--color-vinho); color: var(--color-creme); border-color: var(--color-vinho); }
   .scrolled .cta:hover { color: var(--color-creme); }
 }
