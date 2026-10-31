@@ -3,12 +3,19 @@ export interface GalleryItem {
   src: string;
   alt: string;
   caption: string;
+  tall?: boolean;
 }
 
 export interface OpeningHour {
-  days: string;
+  label: string;
   hours: string;
+  /** Dias da semana (0 = domingo) */
+  days: number[];
+  /** Abertura e fechamento em horas; null quando fechado */
+  open: [number, number] | null;
 }
+
+const img = (name: string) => `/assets/images/${name}.webp`;
 
 export const SITE_CONTENT = {
   brand: {
@@ -28,40 +35,35 @@ export const SITE_CONTENT = {
     { label: 'Visite-nos', href: '#visite' },
   ],
   hero: {
-    eyebrow: 'BISTRÔ EM TAIOBEIRAS',
+    eyebrow: 'Bistrô em Taiobeiras',
     h1: 'Massas, risotos e boas conversas.',
     description: 'Conheça os sabores e os cantos do Bistrô Miriã Soares.',
     primaryCta: 'Explorar sabores',
     secondaryCta: 'Como chegar',
     bottomLocation: 'Avenida da Liberdade, 389 · Taiobeiras/MG',
     image: {
-      src: '/assets/images/entrada-vertical.webp',
+      src: img('entrada-vertical'),
       alt: 'Entrada azul em arco do Bistrô Miriã Soares com portas abertas convidativas',
     },
   },
   flavors: {
     id: 'sabores',
-    eyebrow: 'À MESA',
+    eyebrow: 'À mesa',
     h2: 'Escolha o seu próximo sabor.',
     vitrineImage: {
-      src: '/assets/images/vitrine-horizontal.webp',
+      src: img('vitrine-horizontal'),
       alt: 'Vitrine iluminada apresentando as opções gastronômicas do bistrô',
     },
-    categories: [
-      'Massas',
-      'Risotos',
-      'Sobremesas',
-      'Pratos individuais',
-    ],
+    categories: ['Massas', 'Risotos', 'Sobremesas', 'Pratos individuais'],
     note: 'Veja as novidades e as opções da casa no Instagram.',
-    cta: 'Explorar sabores',
+    cta: 'Ver no Instagram',
   },
   tribute: {
     id: 'bistro',
     h2: 'Um nome, uma homenagem.',
     text: 'Uma homenagem de filho para mãe. O bistrô leva o nome de Miriã Soares.',
     image: {
-      src: '/assets/images/retratos-vertical.webp',
+      src: img('retratos-horizontal'),
       alt: 'Salão do bistrô decorado com quadros e memória afetiva',
     },
   },
@@ -71,15 +73,49 @@ export const SITE_CONTENT = {
     gallery: [
       {
         id: 'patio',
-        src: '/assets/images/patio-horizontal.webp',
+        src: img('patio-horizontal'),
         alt: 'Pátio arborizado do bistrô com iluminação suave e mesas de madeira',
         caption: 'O pátio',
       },
       {
         id: 'interior',
-        src: '/assets/images/interior-vinho-vertical.webp',
+        src: img('interior-vinho-vertical'),
         alt: 'Interior com parede tom vinho, estofado e louças decorativas',
         caption: 'Por dentro do bistrô',
+        tall: true,
+      },
+      {
+        id: 'entrada',
+        src: img('entrada-horizontal'),
+        alt: 'Entrada azul em arco do bistrô vista de frente',
+        caption: 'A porta azul',
+      },
+      {
+        id: 'sombra',
+        src: img('patio-vertical'),
+        alt: 'Pátio do bistrô sob uma árvore madura',
+        caption: 'Sob a árvore',
+        tall: true,
+      },
+      {
+        id: 'pratos',
+        src: img('interior-vinho-horizontal'),
+        alt: 'Canto do bistrô com pratos decorativos na parede',
+        caption: 'Pratos na parede',
+      },
+      {
+        id: 'vitrine',
+        src: img('vitrine-vertical'),
+        alt: 'Vitrine iluminada do bistrô',
+        caption: 'A vitrine',
+        tall: true,
+      },
+      {
+        id: 'retratos',
+        src: img('retratos-vertical'),
+        alt: 'Salão do bistrô com retratos históricos nas paredes',
+        caption: 'Os retratos',
+        tall: true,
       },
     ] as GalleryItem[],
   },
@@ -89,10 +125,10 @@ export const SITE_CONTENT = {
     address: 'Avenida da Liberdade, 389',
     city: 'Taiobeiras/MG',
     hours: [
-      { days: 'Segunda', hours: '16h às 23h' },
-      { days: 'Terça e quarta', hours: '14h às 21h' },
-      { days: 'Quinta a sábado', hours: '14h às 23h' },
-      { days: 'Domingo', hours: 'Fechado' },
+      { label: 'Segunda', hours: '16h às 23h', days: [1], open: [16, 23] },
+      { label: 'Terça e quarta', hours: '14h às 21h', days: [2, 3], open: [14, 21] },
+      { label: 'Quinta a sábado', hours: '14h às 23h', days: [4, 5, 6], open: [14, 23] },
+      { label: 'Domingo', hours: 'Fechado', days: [0], open: null },
     ] as OpeningHour[],
     primaryCta: 'Como chegar',
     secondaryCta: 'Visitar Instagram',

@@ -1,123 +1,124 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { SITE_CONTENT } from '../data/content';
+import { Logo } from './Logo';
+import { EASE } from './Reveal';
 import styles from './Header.module.css';
 
 export const Header: React.FC = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const { scrollY, scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setMobileMenuOpen(false);
-      }
-    };
-    if (mobileMenuOpen) {
-      window.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    let last = 0;
+    return scrollY.on('change', (y) => {
+      setScrolled(y > 60);
+      setHidden(y > 480 && y > last + 2 && !open);
+      if (Math.abs(y - last) > 2) last = y;
+    });
+  }, [scrollY, open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
     };
-  }, [mobileMenuOpen]);
+  }, [open]);
+
+  const { brand, nav } = SITE_CONTENT;
 
   return (
-    <header id="inicio" className={styles.header}>
-      <div className={`container ${styles.inner}`}>
-        {/* SVG Logo à esquerda */}
-        <a href="#inicio" className={styles.logoLink} aria-label={SITE_CONTENT.brand.name}>
-          <img
-            src={SITE_CONTENT.brand.logoSvg}
-            alt={SITE_CONTENT.brand.name}
-            className={styles.logo}
-          />
-        </a>
+    <>
+      <header className={`${styles.header} ${scrolled ? styles.scrolled : ''} ${hidden ? styles.hidden : ''}`}>
+        <div className={`container ${styles.inner}`}>
+          <a href="#inicio" aria-label={`${brand.name} — voltar ao topo`}>
+            <Logo className={styles.logo} />
+          </a>
 
-        {/* Group Navigation & CTA */}
-        <div className={styles.navGroup}>
-          <nav className={styles.navDesktop} aria-label="Navegação Principal">
-            {SITE_CONTENT.nav.map((item) => (
-              <a key={item.href} href={item.href} className={styles.navLink}>
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className={styles.ctaDesktop}>
-            <a
-              href={SITE_CONTENT.brand.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline-dark"
-            >
-              <span>Como chegar</span>
-            </a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            className={styles.menuButton}
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label="Abrir menu de navegação"
-            aria-expanded={mobileMenuOpen}
-          >
-            <Menu size={28} />
-          </button>
-        </div>
-
-        {/* Mobile Drawer */}
-        <div className={`${styles.mobileDrawer} ${mobileMenuOpen ? styles.open : ''}`}>
-          <div className={styles.drawerOverlay} onClick={() => setMobileMenuOpen(false)} />
-          <div className={styles.drawerContent} role="dialog" aria-modal="true" aria-label="Menu">
-            <div className={styles.drawerHeader}>
-              <img
-                src={SITE_CONTENT.brand.logoSvg}
-                alt={SITE_CONTENT.brand.name}
-                className={styles.drawerLogo}
-              />
-              <button
-                type="button"
-                className={styles.closeButton}
-                onClick={() => setMobileMenuOpen(false)}
-                aria-label="Fechar menu"
-              >
-                <X size={24} />
-              </button>
-            </div>
-
-            <nav className={styles.drawerNav}>
-              {SITE_CONTENT.nav.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className={styles.drawerNavLink}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
+          <div className={styles.navGroup}>
+            <nav className={styles.navDesktop} aria-label="Navegação principal">
+              {nav.map((item) => (
+                <a key={item.href} href={item.href} className={styles.navLink}>
                   {item.label}
                 </a>
               ))}
             </nav>
-
-            <div className={styles.drawerCta}>
-              <a
-                href={SITE_CONTENT.brand.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
-                style={{ width: '100%' }}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span>Como chegar</span>
-                <ArrowRight size={16} />
-              </a>
-            </div>
+            <a
+              href={brand.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`btn btn-ghost-creme ${styles.cta}`}
+            >
+              Como chegar <ArrowUpRight size={16} />
+            </a>
+            <button
+              type="button"
+              className={styles.menuButton}
+              onClick={() => setOpen(true)}
+              aria-label="Abrir menu"
+              aria-expanded={open}
+            >
+              <Menu size={28} />
+            </button>
           </div>
         </div>
-      </div>
-    </header>
+        <motion.div className={styles.progress} style={{ scaleX: progress }} aria-hidden="true" />
+      </header>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className={styles.drawer}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
+            <div className={styles.drawerTop}>
+              <Logo className={styles.logo} />
+              <button type="button" className={styles.menuButton} onClick={() => setOpen(false)} aria-label="Fechar menu">
+                <X size={28} />
+              </button>
+            </div>
+            <nav className={styles.drawerNav} aria-label="Menu">
+              {nav.map((item, i) => (
+                <a key={item.href} href={item.href} className={styles.drawerLink} onClick={() => setOpen(false)}>
+                  <motion.span
+                    initial={{ y: '110%' }}
+                    animate={{ y: 0 }}
+                    transition={{ duration: 0.9, ease: EASE, delay: 0.25 + i * 0.08 }}
+                  >
+                    {item.label}
+                  </motion.span>
+                </a>
+              ))}
+            </nav>
+            <div className={styles.drawerFoot}>
+              <a
+                href={brand.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-creme"
+                onClick={() => setOpen(false)}
+              >
+                Como chegar <ArrowUpRight size={16} />
+              </a>
+              <p className={styles.drawerSmall}>{brand.address} · {brand.fullLocation}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };

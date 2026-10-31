@@ -1,35 +1,20 @@
 .footer {
-  background-color: var(--color-vinho);
+  background: var(--color-vinho-deep);
   color: var(--color-creme);
-  border-top: 1px solid var(--color-vinho-hover);
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding: clamp(56px, 9vw, 120px) 0 96px;
+  overflow: clip;
 }
 
-.inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+.top { display: grid; gap: 40px; justify-items: start; }
+.logo { width: clamp(180px, 42vw, 420px); }
 
-.logo {
-  height: 48px;
-  width: auto;
-  filter: brightness(0) invert(0.95) sepia(0.2) saturate(0.5); /* Adapts SVG to creme on dark background */
-}
+.links { display: flex; flex-direction: column; gap: 10px; font-size: 1.0625rem; }
+.links a { display: inline-flex; align-items: center; gap: 8px; width: fit-content; position: relative; }
+.links a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.5s var(--ease); }
+.links a:hover::after { transform: scaleX(1); transform-origin: left; }
 
-.location {
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  color: rgba(247, 241, 231, 0.85);
-  font-weight: 500;
-  letter-spacing: 0.05em;
-}
+.bottom { margin-top: clamp(48px, 8vw, 96px); padding-top: 22px; border-top: 1px solid rgba(247, 241, 231, 0.2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 0.875rem; color: rgba(247, 241, 231, 0.7); }
 
-@media (max-width: 640px) {
-  .inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
+@media (min-width: 900px) {
+  .top { grid-template-columns: 1fr auto; align-items: end; }
 }

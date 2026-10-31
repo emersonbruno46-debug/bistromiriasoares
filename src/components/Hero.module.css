@@ -1,138 +1,157 @@
 .hero {
-  background-color: var(--color-vinho);
-  color: var(--color-creme);
   position: relative;
-  overflow: hidden;
-  padding-top: clamp(48px, 6vw, 88px);
-  padding-bottom: clamp(24px, 3vw, 40px);
-  border-bottom: 1px solid var(--color-vinho-hover);
+  background: var(--color-vinho);
+  color: var(--color-creme);
+  padding-top: calc(var(--header-h) + 20px);
+  overflow: clip;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 440px;
-  gap: clamp(32px, 5vw, 64px);
-  align-items: center;
+  gap: 40px;
+  padding-bottom: 56px;
 }
 
-.textContent {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
+.text { display: flex; flex-direction: column; align-items: flex-start; }
 
-.eyebrow {
-  color: var(--color-creme-dark);
-  font-size: 0.8125rem;
-  letter-spacing: 0.16em;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  font-weight: 600;
+.status {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  padding: 8px 16px 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(247, 241, 231, 0.3);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 28px;
 }
-
-.eyebrow::after {
+.dot {
+  position: relative;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #8fb996;
+}
+.dotClosed { background: #c7a59a; }
+.dot::after {
   content: '';
-  display: inline-block;
-  width: 24px;
-  height: 2px;
-  background-color: var(--color-blue);
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: ping 2s var(--ease) infinite;
 }
+.dotClosed::after { animation: none; }
+@keyframes ping { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(3); opacity: 0; } }
+
+.eyebrow { color: rgba(247, 241, 231, 0.75); margin-bottom: 22px; }
 
 .title {
-  font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 5vw, 4.75rem);
-  font-weight: 600;
-  line-height: 1.08;
-  color: var(--color-creme);
-  margin-bottom: 20px;
+  font-size: clamp(3rem, 12.4vw, 5.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 500;
 }
 
 .description {
-  font-family: var(--font-sans);
-  font-size: clamp(1.0625rem, 1.8vw, 1.25rem);
-  font-weight: 400;
-  line-height: 1.6;
-  color: rgba(247, 241, 231, 0.9);
-  margin-bottom: 36px;
-  max-width: 480px;
+  margin-top: 28px;
+  max-width: 34ch;
+  font-size: clamp(1.0625rem, 2.4vw, 1.25rem);
+  line-height: 1.55;
+  color: rgba(247, 241, 231, 0.85);
 }
 
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 16px;
-}
+.actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 14px; }
 
-/* Arch Photo Frame V2 */
-.archWrapper {
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-  margin: 0 auto;
-  padding: 10px;
-}
-
-.archBorder {
-  position: relative;
-  border-radius: 240px 240px 0 0;
-  border: 1px solid rgba(247, 241, 231, 0.35);
-  padding: 8px;
-}
-
-.archImageFrame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  border-radius: 230px 230px 0 0;
-  overflow: hidden;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  transition: transform var(--transition-slow);
-}
-
-.archImageFrame:hover .image {
-  transform: scale(1.03);
-}
-
-/* Bottom Location Bar */
-.locationBar {
-  margin-top: clamp(40px, 5vw, 64px);
-  padding-top: 20px;
-  border-top: 1px solid var(--color-divider-dark);
-  font-family: var(--font-sans);
+.location {
+  margin-top: 36px;
   font-size: 0.875rem;
-  color: rgba(247, 241, 231, 0.75);
-  letter-spacing: 0.05em;
+  color: rgba(247, 241, 231, 0.65);
 }
 
-@media (max-width: 960px) {
+/* Arco ------------------------------------------------------------------ */
+.archWrap {
+  position: relative;
+  width: min(100%, 360px);
+  margin-inline: auto;
+  aspect-ratio: 4 / 5.3;
+  justify-self: center;
+}
+.ring {
+  position: absolute;
+  inset: -14px -14px 0 -14px;
+  border: 1.5px solid rgba(247, 241, 231, 0.4);
+  border-bottom: none;
+  border-radius: 999px 999px 0 0;
+}
+.arch {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+  background: var(--color-vinho-deep);
+}
+.archImg {
+  width: 100%;
+  height: 115%;
+  object-fit: cover;
+  object-position: 50% 55%;
+}
+
+.badge {
+  position: absolute;
+  left: -34px;
+  bottom: 28px;
+  width: 112px; height: 112px;
+  z-index: 2;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--color-creme);
+  color: var(--color-vinho);
+  transition: transform 0.5s var(--ease);
+}
+.badge:hover { transform: scale(1.08); }
+.badgeSvg { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 22s linear infinite; }
+.badgeSvg text { font-family: var(--font-sans); font-size: 10.5px; font-weight: 600; letter-spacing: 0.22em; fill: currentColor; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Marquee --------------------------------------------------------------- */
+.marquee {
+  background: var(--color-vinho-deep);
+  color: var(--color-creme);
+  overflow: hidden;
+  padding: 22px 0;
+  user-select: none;
+}
+.track {
+  display: flex;
+  width: max-content;
+  animation: slide 32s linear infinite;
+}
+.marquee:hover .track { animation-play-state: paused; }
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+  padding-right: clamp(24px, 4vw, 56px);
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
+  font-style: italic;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.sep { width: 10px; height: 10px; border-radius: 50%; background: var(--color-blue); flex: none; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+@media (min-width: 900px) {
+  .hero { min-height: 100svh; display: flex; flex-direction: column; }
   .grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    flex: 1;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 64px;
+    padding-bottom: 72px;
+    padding-top: 24px;
   }
-
-  .actions {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    gap: 16px;
-  }
-
-  .actions .btn {
-    width: 100%;
-  }
-
-  .archWrapper {
-    max-width: 320px;
-  }
+  .title { font-size: clamp(4.2rem, 7.4vw, 7.4rem); }
+  .archWrap { width: min(100%, 440px); justify-self: end; margin-inline: 0; }
+  .badge { left: -56px; width: 132px; height: 132px; }
 }
